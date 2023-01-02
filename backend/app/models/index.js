@@ -36,6 +36,8 @@ db.sequelize = sequelize;
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
 
+db.sclub = require("../models/sclub.model.js")(sequelize, Sequelize);
+
 /*
 With through, foreignKey, otherKey, we’re gonna have a new table user_roles
 as connection between users and roles table via their primary key as foreign keys.
@@ -51,6 +53,42 @@ db.user.belongsToMany(db.role, {
     through: "user_roles",
     foreignKey: "userId",
     otherKey: "roleId"
+});
+
+// student - student club relation
+db.sclub.belongsToMany(db.user, {
+    through: "membership",
+    foreignKey: "sclubId",
+    otherKey: "userId"
+});
+db.user.belongsToMany(db.role, {
+    through: "membership",
+    foreignKey: "userId",
+    otherKey: "sclubId"
+});
+
+// counselor - student club relation
+db.sclub.belongsToMany(db.user, {
+    through: "counsels",
+    foreignKey: "sclubId",
+    otherKey: "userId"
+});
+db.user.belongsToMany(db.role, {
+    through: "counsels",
+    foreignKey: "userId",
+    otherKey: "sclubId"
+});
+
+// chairperson - student club relation
+db.sclub.belongsToMany(db.user, {
+    through: "manages",
+    foreignKey: "sclubId",
+    otherKey: "userId"
+});
+db.user.belongsToMany(db.role, {
+    through: "manages",
+    foreignKey: "userId",
+    otherKey: "sclubId"
 });
 
 db.ROLES = ["admin", "student", "chairperson","counselor"];

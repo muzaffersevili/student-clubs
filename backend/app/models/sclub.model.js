@@ -1,18 +1,12 @@
 module.exports = (sequelize, Sequelize) => {
-    const Sclub = sequelize.define("sclub", {
+    const Sclub = sequelize.define("sclubs", {
       name: {
-        type: Sequelize.STRING
-      },
-      chairperson: {
-        type: Sequelize.STRING
-      },
-      counsellor: {
         type: Sequelize.STRING
       },
       description: {
         type: Sequelize.STRING
       },
-      published: {
+      isActive: {
         type: Sequelize.BOOLEAN
       }
     });

@@ -10,6 +10,7 @@ type Props = {};
 type State = {
   email: string,
   password: string,
+  role: string;
   successful: boolean,
   message: string
 };
@@ -23,6 +24,7 @@ export default class Register extends Component<Props, State> {
     this.state = {
       email: "",
       password: "",
+      role: "student",
       successful: false,
       message: ""
     };
@@ -44,11 +46,14 @@ export default class Register extends Component<Props, State> {
             val.toString().length <= 40
         )
         .required("This field is required!"),
+        role: Yup.string().required("This field is required!")
     });
   }
+  // registeras a student or a counselor
+  handleRegister(formValue: {email: string; password: string; role: string }) {
+    const { email, password, role } = formValue;
+    const roles = [role];
 
-  handleRegister(formValue: {email: string; password: string }) {
-    const { email, password } = formValue;
 
     this.setState({
       message: "",
@@ -57,7 +62,8 @@ export default class Register extends Component<Props, State> {
 
     AuthService.register(
       email,
-      password
+      password,
+      roles
     ).then(
       response => {
         this.setState({
@@ -85,9 +91,9 @@ export default class Register extends Component<Props, State> {
     const { successful, message } = this.state;
 
     const initialValues = {
-      username: "",
       email: "",
       password: "",
+      role: "student"
     };
 
     return (
@@ -129,6 +135,18 @@ export default class Register extends Component<Props, State> {
                       component="div"
                       className="alert alert-danger"
                     />
+                  </div>
+
+                  <div id="radio-group">Role</div>
+                    <div role="group" aria-labelledby="radio-group">
+                      <label>
+                        <Field type="radio" name="role" value="student" defaultChecked={this.state.role === "student"}  />
+                        Student
+                      </label>
+                      <label>
+                        <Field type="radio" name="role" value="counselor" />
+                        Counselor
+                      </label>
                   </div>
 
                   <div className="form-group">

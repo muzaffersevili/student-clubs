@@ -1,27 +1,27 @@
-module.exports = app => {
+  module.exports = app => {
     const sclubs = require("../controllers/sclub.controller.js");
   
     var router = require("express").Router();
   
-    // Create a new Tutorial
+    // Create a new Student Club
     router.post("/", sclubs.create);
   
-    // Retrieve all Tutorials
+    // Retrieve all sclubs
     router.get("/", sclubs.findAll);
   
-    // Retrieve all published Tutorials
-    router.get("/published", sclubs.findAllPublished);
+    // Retrieve all published sclubs
+    router.get("/published", sclubs.findAllActive);
   
-    // Retrieve a single Tutorial with id
+    // Retrieve a single Student Club with id
     router.get("/:id", sclubs.findOne);
   
-    // Update a Tutorial with id
+    // Update a Student Club with id
     router.put("/:id", sclubs.update);
   
-    // Delete a Tutorial with id
+    // Delete a Student Club with id
     router.delete("/:id", sclubs.delete);
   
-    // Delete all Tutorials
+    // Delete all sclubs
     router.delete("/", sclubs.deleteAll);
   
     app.use('/api/sclubs', router);
