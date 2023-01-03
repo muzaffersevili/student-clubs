@@ -10,10 +10,15 @@ import Login from "./components/login.component";
 import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Profile from "./components/profile.component";
+
 import BoardStudent from "./components/board-student.component";
 import BoardCounselor from "./components/board-counselor.component";
 import BoardAdmin from "./components/board-admin.component";
 import BoardChairPerson from "./components/board-chairperson.component";
+
+import AddSclub from "./components/add-sclub.component";
+import Sclub from "./components/sclub.component";
+import SclubsList from "./components/sclubs-list.component";
 
 import EventBus from "./common/EventBus";
 
@@ -120,18 +125,32 @@ class App extends Component<Props, State> {
                 </Link>
               </li>
             )}
+            {showAdminBoard && (
+              <li className="nav-item">
+                <Link to={"/sclubs"} className="nav-link">
+                  Student Clubs
+                </Link>
+              </li>
+            )}
+            {showAdminBoard && (
+              <li className="nav-item">
+                <Link to={"/add"} className="nav-link">
+                  Add Student Club
+                </Link>
+              </li>
+            )}
           </div>
 
           {currentUser ? (
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link to={"/profile"} className="nav-link">
-                  {currentUser.email}
+                  {(currentUser.email)!.split('@')[0]}
                 </Link>
               </li>
               <li className="nav-item">
                 <a href="/login" className="nav-link" onClick={this.logOut}>
-                  LogOut
+                  Logout
                 </a>
               </li>
             </div>
@@ -159,10 +178,15 @@ class App extends Component<Props, State> {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
+
             <Route path="/student" element={<BoardStudent />} />
             <Route path="/counselor" element={<BoardCounselor />} />
             <Route path="/chairperson" element={<BoardChairPerson />} />
             <Route path="/admin" element={<BoardAdmin />} />
+
+            <Route path="/sclubs" element={<SclubsList/>} />
+            <Route path="/add" element={<AddSclub/>} />
+            <Route path="/sclubs/:id" element={<Sclub/>} />
           </Routes>
         </div>
 

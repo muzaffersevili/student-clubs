@@ -147,6 +147,10 @@ export default class Register extends Component<Props, State> {
                         <Field type="radio" name="role" value="counselor" />
                         Counselor
                       </label>
+                      <label>
+                        <Field type="radio" name="role" value="admin"  />
+                        Admin
+                      </label>
                   </div>
 
                   <div className="form-group">

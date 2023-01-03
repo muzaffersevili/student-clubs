@@ -1,19 +1,27 @@
-import { Component, ChangeEvent } from "react";
+import React,{ Component, ChangeEvent} from "react";
 import { useNavigate } from "react-router-dom";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 import SclubDataService from "../services/sclub.service";
 import ISclubData from "../types/sclub.type";
 
-
-type Props = {}
+type Props = {id:string;navigation:any}
 
 type State = {
   currentSclub: ISclubData;
   message: string;
 }
 
-export default class Tutorial extends Component<Props, State> {
+
+function withParams(Component: any) {
+  return (props: any) => {
+    const navigation = useNavigate();
+    const params = useParams();
+    return <Component {...props} id={params} navigation={navigation} />;
+  }
+}
+
+class Sclub extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.onChangeName = this.onChangeName.bind(this);
@@ -22,7 +30,7 @@ export default class Tutorial extends Component<Props, State> {
     this.updateActive = this.updateActive.bind(this);
     this.updateSclub = this.updateSclub.bind(this);
     this.deleteSclub = this.deleteSclub.bind(this);
-
+    
     this.state = {
       currentSclub: {
         id: null,
@@ -35,7 +43,10 @@ export default class Tutorial extends Component<Props, State> {
   }
 
   componentDidMount() {// may cause a problem
-    const { id } = useParams();
+    let id : string;
+    
+    id = this.props.id;
+    console.log(id);
     if(id){
         this.getSclub(id);
     }
@@ -65,8 +76,8 @@ export default class Tutorial extends Component<Props, State> {
     }));
   }
 
-  getSclub(id: string) {
-    SclubDataService.get(id)
+  getSclub(idProp: any) {
+    SclubDataService.get(idProp.id)
       .then((response: any) => {
         this.setState({
           currentSclub: response.data,
@@ -117,7 +128,17 @@ export default class Tutorial extends Component<Props, State> {
         console.log(e);
       });
   }
-
+  deleteSclub() {
+    SclubDataService.delete(this.state.currentSclub.id)
+      .then((response: any) => {
+        console.log(response.data);
+        this.props.navigation("/sclubs");
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
+  }
+/*
   deleteSclub() {
     SclubDataService.delete(this.state.currentSclub.id)
       .then((response: any) => {
@@ -129,7 +150,7 @@ export default class Tutorial extends Component<Props, State> {
         console.log(e);
       });
   }
-
+*/
   render() {
     const { currentSclub } = this.state;
 
@@ -210,3 +231,5 @@ export default class Tutorial extends Component<Props, State> {
     );
   }
 }
+
+export default withParams(Sclub);

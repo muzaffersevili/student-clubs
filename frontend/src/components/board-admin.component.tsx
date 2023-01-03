@@ -3,6 +3,8 @@ import { Component } from "react";
 import UserService from "../services/user.service";
 import EventBus from "../common/EventBus";
 
+import Sclub from "./sclub.component";
+
 type Props = {};
 
 type State = {
@@ -45,9 +47,7 @@ export default class BoardAdmin extends Component<Props, State> {
   render() {
     return (
       <div className="container">
-        <header className="jumbotron">
-          <h3>{this.state.content}</h3>
-        </header>
+        <div>This is a parent component</div>
       </div>
     );
   }
