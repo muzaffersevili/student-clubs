@@ -46,7 +46,24 @@ export default class BoardChairPerson extends Component<Props, State> {
     return (
       <div className="container">
         <header className="jumbotron">
-          <h3>{this.state.content}</h3>
+        <div className="form-group">
+            <button type="submit" className="btn btn-info btn-lg">Show Member List</button>
+          </div>
+          <div className="form-group">
+            <button type="submit" className="btn btn-info btn-lg">Add Event</button>
+          </div>
+          <div className="form-group">
+            <button type="submit" className="btn btn-info btn-lg">Show Events</button>
+          </div>
+          <div className="form-group">
+            <button type="submit" className="btn btn-info btn-lg">Add Announcement</button>
+          </div>
+          <div className="form-group">
+            <button type="submit" className="btn btn-info btn-lg">Show Announcements</button>
+          </div>
+          <div className="form-group">
+            <button type="submit" className="btn btn-info btn-lg">Show Student Club Informations</button>
+          </div>
         </header>
       </div>
     );
