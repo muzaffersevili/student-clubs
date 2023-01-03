@@ -38,6 +38,7 @@ db.role = require("../models/role.model.js")(sequelize, Sequelize);
 db.sclub = require("../models/sclub.model.js")(sequelize, Sequelize);
 db.announcement = require("../models/announcement.model.js")(sequelize, Sequelize);
 db.event = require("../models/event.model.js")(sequelize, Sequelize);
+db.log = require("../models/log.model.js")(sequelize, Sequelize);
 
 /*
 With through, foreignKey, otherKey, we’re gonna have a new table user_roles
