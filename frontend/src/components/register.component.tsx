@@ -46,11 +46,11 @@ export default class Register extends Component<Props, State> {
             val.toString().length <= 40
         )
         .required("This field is required!"),
-        role: Yup.string().required("This field is required!")
+      role: Yup.string().required("This field is required!")
     });
   }
   // registeras a student or a counselor
-  handleRegister(formValue: {email: string; password: string; role: string }) {
+  handleRegister(formValue: { email: string; password: string; role: string }) {
     const { email, password, role } = formValue;
     const roles = [role];
 
@@ -138,19 +138,19 @@ export default class Register extends Component<Props, State> {
                   </div>
 
                   <div id="radio-group">Role</div>
-                    <div role="group" aria-labelledby="radio-group">
-                      <label>
-                        <Field type="radio" name="role" value="student" defaultChecked={this.state.role === "student"}  />
-                        Student
-                      </label>
-                      <label>
-                        <Field type="radio" name="role" value="counselor" />
-                        Counselor
-                      </label>
-                      <label>
-                        <Field type="radio" name="role" value="admin"  />
-                        Admin
-                      </label>
+                  <div role="group" aria-labelledby="radio-group">
+                    <label>
+                      <Field type="radio" name="role" value="student" defaultChecked={this.state.role === "student"} />
+                      Student
+                    </label>
+                    <label>
+                      <Field type="radio" name="role" value="counselor" />
+                      Counselor
+                    </label>
+                    <label>
+                      <Field type="radio" name="role" value="admin" />
+                      Admin
+                    </label>
                   </div>
 
                   <div className="form-group">
@@ -179,4 +179,4 @@ export default class Register extends Component<Props, State> {
   }
 }
 
-export {Register};
+export { Register };

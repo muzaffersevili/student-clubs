@@ -45,7 +45,7 @@ export default class BoardAdmin extends Component<Props, State> {
   }
 
   render() {
-    if(this.state.content == "Require Admin Role!"){
+    if (this.state.content == "Require Admin Role!") {
       return (
         <div className="container">
           <header className="jumbotron">
@@ -54,7 +54,7 @@ export default class BoardAdmin extends Component<Props, State> {
         </div>
       );
     }
-    else{
+    else {
       return (
         <div className="container">
           <header className="jumbotron">
@@ -63,7 +63,7 @@ export default class BoardAdmin extends Component<Props, State> {
         </div>
       );
     }
-    
+
   }
 }
 export { BoardAdmin };

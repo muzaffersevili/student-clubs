@@ -47,7 +47,7 @@ export default class Profile extends Component<Props, State> {
               <div className="text-center">
                 <img
                   src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                  style={{borderRadius: "50%"}}
+                  style={{ borderRadius: "50%" }}
                 />
               </div>
               <h3>

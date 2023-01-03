@@ -200,13 +200,13 @@ export default class TutorialsList extends Component<Props, State>{
 
                 <div>
                   <h3>
-                <Link
-                  to={"/sclubs/" + currentSclub.id}
-                  className="badge badge-warning"
-                >
-                  Edit
-                </Link>
-                </h3>
+                    <Link
+                      to={"/sclubs/" + currentSclub.id}
+                      className="badge badge-warning"
+                    >
+                      Edit
+                    </Link>
+                  </h3>
                 </div>
 
               </div>

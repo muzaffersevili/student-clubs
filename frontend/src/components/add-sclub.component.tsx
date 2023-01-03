@@ -27,7 +27,7 @@ export default class AddTutorial extends Component<Props, State> {
       adminAccess: false
     };
   }
-  async componentDidMount(){
+  async componentDidMount() {
     this.setState({
       adminAccess: await AdminControl()
     });
@@ -102,36 +102,36 @@ export default class AddTutorial extends Component<Props, State> {
           ) : (
             <div>
               <h4>
-              <div className="form-group">
-                
-                <label htmlFor="name">Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="name"
-                  required
-                  value={name}
-                  onChange={this.onChangeName}
-                  name="name"
-                />
-              </div>
+                <div className="form-group">
 
-              <div className="form-group">
-                <label htmlFor="description">Description</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="description"
-                  required
-                  value={description}
-                  onChange={this.onChangeDescription}
-                  name="description"
-                />
-              </div>
+                  <label htmlFor="name">Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="name"
+                    required
+                    value={name}
+                    onChange={this.onChangeName}
+                    name="name"
+                  />
+                </div>
 
-              <button onClick={this.saveSclub} className="btn btn-success btn-lg">
-                Submit
-              </button>
+                <div className="form-group">
+                  <label htmlFor="description">Description</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="description"
+                    required
+                    value={description}
+                    onChange={this.onChangeDescription}
+                    name="description"
+                  />
+                </div>
+
+                <button onClick={this.saveSclub} className="btn btn-success btn-lg">
+                  Submit
+                </button>
               </h4>
             </div>
           )}

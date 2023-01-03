@@ -46,4 +46,4 @@ export default class Home extends Component<Props, State> {
   }
 }
 
-export {Home};
+export { Home };

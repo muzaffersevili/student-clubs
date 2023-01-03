@@ -46,7 +46,7 @@ export default class BoardStudent extends Component<Props, State> {
     return (
       <div className="container">
         <header className="jumbotron">
-        <div className="form-group">
+          <div className="form-group">
             <button type="submit" className="btn btn-info btn-lg">Show Student Clubs</button>
           </div>
           <div className="form-group">
@@ -64,4 +64,4 @@ export default class BoardStudent extends Component<Props, State> {
   }
 }
 
-export {BoardStudent};
+export { BoardStudent };

@@ -48,8 +48,8 @@ class Sclub extends Component<Props, State> {
 
   async componentDidMount() {// may cause a problem
     const adminAccess = await AdminControl();
-    this.setState({adminAccess});
-    if(adminAccess){
+    this.setState({ adminAccess });
+    if (adminAccess) {
       let id: string;
 
       id = this.props.id;
@@ -166,8 +166,8 @@ class Sclub extends Component<Props, State> {
               <h3><strong>Student Club</strong></h3>
               <form>
                 <div className="form-group">
-                <h4>
-                  <label htmlFor="name">Name</label>
+                  <h4>
+                    <label htmlFor="name">Name</label>
                   </h4>
                   <input
                     type="text"
@@ -178,8 +178,8 @@ class Sclub extends Component<Props, State> {
                   />
                 </div>
                 <div className="form-group">
-                <h4>
-                  <label htmlFor="description">Description</label>
+                  <h4>
+                    <label htmlFor="description">Description</label>
                   </h4>
                   <input
                     type="text"
@@ -193,47 +193,47 @@ class Sclub extends Component<Props, State> {
                 <div className="form-group">
                   <h4>
                     <strong>Status: </strong>
-                  {currentSclub.isActive ? "Active" : "Inactive"}
+                    {currentSclub.isActive ? "Active" : "Inactive"}
                   </h4>
                 </div>
               </form>
 
               <h3>
-              {currentSclub.isActive ? (
-                <button
-                  className="badge badge-primary mr-2"
-                  onClick={() => this.updateActive(false)}
-                >
-                  Inactivate
-                </button>
-              ) : (
-                <button
-                  className="badge badge-primary mr-2"
-                  onClick={() => this.updateActive(true)}
-                >
-                  Activate
-                </button>
-              )}
+                {currentSclub.isActive ? (
+                  <button
+                    className="badge badge-primary mr-2"
+                    onClick={() => this.updateActive(false)}
+                  >
+                    Inactivate
+                  </button>
+                ) : (
+                  <button
+                    className="badge badge-primary mr-2"
+                    onClick={() => this.updateActive(true)}
+                  >
+                    Activate
+                  </button>
+                )}
               </h3>
 
               <h3>
-              <button
-                className="badge badge-danger mr-2"
-                onClick={this.deleteSclub}
-              >
-                Delete
-              </button>
+                <button
+                  className="badge badge-danger mr-2"
+                  onClick={this.deleteSclub}
+                >
+                  Delete
+                </button>
               </h3>
 
               <h3>
-              <button
-                type="submit"
-                className="badge badge-success"
-                onClick={this.updateSclub}
-              >
-                Update
-              </button>
-              <p>{this.state.message}</p>
+                <button
+                  type="submit"
+                  className="badge badge-success"
+                  onClick={this.updateSclub}
+                >
+                  Update
+                </button>
+                <p>{this.state.message}</p>
               </h3>
             </div>
           ) : (

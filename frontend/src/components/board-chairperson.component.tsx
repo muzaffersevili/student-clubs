@@ -46,7 +46,7 @@ export default class BoardChairPerson extends Component<Props, State> {
     return (
       <div className="container">
         <header className="jumbotron">
-        <div className="form-group">
+          <div className="form-group">
             <button type="submit" className="btn btn-info btn-lg">Show Member List</button>
           </div>
           <div className="form-group">
@@ -70,4 +70,4 @@ export default class BoardChairPerson extends Component<Props, State> {
   }
 }
 
-export {BoardChairPerson};
+export { BoardChairPerson };
