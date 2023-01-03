@@ -47,10 +47,9 @@ class Sclub extends Component<Props, State> {
   }
 
   async componentDidMount() {// may cause a problem
-    this.setState({
-      adminAccess: await AdminControl()
-    });
-    if(this.state.adminAccess){
+    const adminAccess = await AdminControl();
+    this.setState({adminAccess});
+    if(adminAccess){
       let id: string;
 
       id = this.props.id;

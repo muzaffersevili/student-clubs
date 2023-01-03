@@ -1,3 +1,4 @@
+
 import { Component, ChangeEvent } from "react";
 import SclubDataService from "../services/sclub.service";
 import { Link } from "react-router-dom";
@@ -34,11 +35,11 @@ export default class TutorialsList extends Component<Props, State>{
   }
 
   async componentDidMount() {
-    this.setState({
-      isAdmin: await AdminControl()
-    });
-    if(this.state.isAdmin){
-      this.retrieveSclubs();
+    const isAdmin = await AdminControl();
+    this.setState({ isAdmin });
+    
+    if(isAdmin){
+      await this.retrieveSclubs();
     }
   }
 
@@ -50,7 +51,7 @@ export default class TutorialsList extends Component<Props, State>{
     });
   }
 
-  retrieveSclubs() {
+  async retrieveSclubs(): Promise<void> {
     SclubDataService.getAll()
       .then((response: any) => {
         this.setState({
