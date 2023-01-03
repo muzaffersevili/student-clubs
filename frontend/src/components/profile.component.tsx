@@ -44,27 +44,40 @@ export default class Profile extends Component<Props, State> {
         {(this.state.userReady) ?
           <div>
             <header className="jumbotron">
+              <div className="text-center">
+                <img
+                  src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                  style={{borderRadius: "50%"}}
+                />
+              </div>
               <h3>
-                <strong>{currentUser.email}</strong> Profile
+                {"\n"}
+              </h3>
+              <h3>
+
+                <div className="text-center">
+                  <strong>{currentUser.email}</strong>'s Profile
+                </div>
               </h3>
             </header>
-            <p>
-              <strong>Token:</strong>{" "}
-              {currentUser.accessToken.substring(0, 20)} ...{" "}
-              {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
-            </p>
-            <p>
-              <strong>Id:</strong>{" "}
-              {currentUser.id}
-            </p>
-            <p>
+            <h4>
               <strong>Email:</strong>{" "}
               {currentUser.email}
-            </p>
-            <strong>Authorities:</strong>
+              {"\n"}
+            </h4>
+            <h4>
+              <strong>Phone Number:</strong>{" "}
+              Phone Number
+              {"\n"}
+            </h4>
+            <h4>
+              <strong>Authorities:{"\n"}</strong>
+            </h4>
             <ul>
-              {currentUser.roles &&
-                currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
+              <h5>
+                {currentUser.roles &&
+                  currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
+              </h5>
             </ul>
           </div> : null}
       </div>
@@ -72,4 +85,4 @@ export default class Profile extends Component<Props, State> {
   }
 }
 
-export {Profile};
+export { Profile };
