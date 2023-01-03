@@ -2,6 +2,7 @@ import { Component, ChangeEvent } from "react";
 import SclubDataService from "../services/sclub.service";
 import { Link } from "react-router-dom";
 import ISclubData from '../types/sclub.type';
+import AdminControl from '../services/admin-control';
 
 type Props = {};
 
@@ -9,7 +10,8 @@ type State = {
   sclubs: Array<ISclubData>,
   currentSclub: ISclubData | null,
   currentIndex: number,
-  searchName: string
+  searchName: string,
+  isAdmin: boolean
 };
 
 export default class TutorialsList extends Component<Props, State>{
@@ -26,12 +28,18 @@ export default class TutorialsList extends Component<Props, State>{
       sclubs: [],
       currentSclub: null,
       currentIndex: -1,
-      searchName: ""
+      searchName: "",
+      isAdmin: false
     };
   }
 
-  componentDidMount() {
-    this.retrieveSclubs();
+  async componentDidMount() {
+    this.setState({
+      isAdmin: await AdminControl()
+    });
+    if(this.state.isAdmin){
+      this.retrieveSclubs();
+    }
   }
 
   onChangeSearchName(e: ChangeEvent<HTMLInputElement>) {
@@ -100,94 +108,106 @@ export default class TutorialsList extends Component<Props, State>{
   }
 
   render() {
-    const { searchName, sclubs, currentSclub, currentIndex } = this.state;
+    if(!this.state.isAdmin){
+      return (
+        <div className="container">
+          <header className="jumbotron">
+            <h3>{"Require Admin Role!"}</h3>
+          </header>
+        </div>
+      );
+    }
+    else{
+      const { searchName, sclubs, currentSclub, currentIndex } = this.state;
 
-    return (
-      <div className="list row">
-        <div className="col-md-8">
-          <div className="input-group mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search by title"
-              value={searchName}
-              onChange={this.onChangeSearchName}
-            />
-            <div className="input-group-append">
-              <button
-                className="btn btn-outline-secondary"
-                type="button"
-                onClick={this.searchName}
-              >
-                Search
-              </button>
+      return (
+        <div className="list row">
+          <div className="col-md-8">
+            <div className="input-group mb-3">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search by title"
+                value={searchName}
+                onChange={this.onChangeSearchName}
+              />
+              <div className="input-group-append">
+                <button
+                  className="btn btn-outline-secondary"
+                  type="button"
+                  onClick={this.searchName}
+                >
+                  Search
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="col-md-6">
-          <h4>Student Clubs List</h4>
-
-          <ul className="list-group">
-            {sclubs &&
-              sclubs.map((tutorial: ISclubData, index: number) => (
-                <li
-                  className={
-                    "list-group-item " +
-                    (index === currentIndex ? "active" : "")
-                  }
-                  onClick={() => this.setActiveSclub(tutorial, index)}
-                  key={index}
+          <div className="col-md-6">
+            <h4>Student Clubs List</h4>
+  
+            <ul className="list-group">
+              {sclubs &&
+                sclubs.map((tutorial: ISclubData, index: number) => (
+                  <li
+                    className={
+                      "list-group-item " +
+                      (index === currentIndex ? "active" : "")
+                    }
+                    onClick={() => this.setActiveSclub(tutorial, index)}
+                    key={index}
+                  >
+                    {tutorial.name}
+                  </li>
+                ))}
+            </ul>
+  
+            <button
+              className="m-3 btn btn-sm btn-danger"
+              onClick={this.removeAllTutorials}
+            >
+              Remove All
+            </button>
+          </div>
+          <div className="col-md-6">
+            {currentSclub ? (
+              <div>
+                <h4>Student Club</h4>
+                <div>
+                  <label>
+                    <strong>Name:</strong>
+                  </label>{" "}
+                  {currentSclub.name}
+                </div>
+                <div>
+                  <label>
+                    <strong>Description:</strong>
+                  </label>{" "}
+                  {currentSclub.description}
+                </div>
+                <div>
+                  <label>
+                    <strong>Status:</strong>
+                  </label>{" "}
+                  {currentSclub.isActive ? "Active" : "Inactive"}
+                </div>
+  
+                <Link
+                  to={"/sclubs/" + currentSclub.id}
+                  className="badge badge-warning"
                 >
-                  {tutorial.name}
-                </li>
-              ))}
-          </ul>
-
-          <button
-            className="m-3 btn btn-sm btn-danger"
-            onClick={this.removeAllTutorials}
-          >
-            Remove All
-          </button>
+                  Edit
+                </Link>
+              </div>
+            ) : (
+              <div>
+                <br />
+                <p>Please click on a Student Club...</p>
+              </div>
+            )}
+          </div>
         </div>
-        <div className="col-md-6">
-          {currentSclub ? (
-            <div>
-              <h4>Student Club</h4>
-              <div>
-                <label>
-                  <strong>Name:</strong>
-                </label>{" "}
-                {currentSclub.name}
-              </div>
-              <div>
-                <label>
-                  <strong>Description:</strong>
-                </label>{" "}
-                {currentSclub.description}
-              </div>
-              <div>
-                <label>
-                  <strong>Status:</strong>
-                </label>{" "}
-                {currentSclub.isActive ? "Active" : "Inactive"}
-              </div>
-
-              <Link
-                to={"/sclubs/" + currentSclub.id}
-                className="badge badge-warning"
-              >
-                Edit
-              </Link>
-            </div>
-          ) : (
-            <div>
-              <br />
-              <p>Please click on a Student Club...</p>
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
+      );
+    }
+    }
+    
 }

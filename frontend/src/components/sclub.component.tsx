@@ -1,15 +1,18 @@
-import React,{ Component, ChangeEvent} from "react";
+import React, { Component, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 import SclubDataService from "../services/sclub.service";
 import ISclubData from "../types/sclub.type";
 
-type Props = {id:string;navigation:any}
+import AdminControl from '../services/admin-control';
+
+type Props = { id: string; navigation: any }
 
 type State = {
   currentSclub: ISclubData;
   message: string;
+  adminAccess: boolean
 }
 
 
@@ -30,25 +33,31 @@ class Sclub extends Component<Props, State> {
     this.updateActive = this.updateActive.bind(this);
     this.updateSclub = this.updateSclub.bind(this);
     this.deleteSclub = this.deleteSclub.bind(this);
-    
+
     this.state = {
       currentSclub: {
         id: null,
         name: "",
         description: "",
-        isActive: false,
+        isActive: false
       },
       message: "",
+      adminAccess: false
     };
   }
 
-  componentDidMount() {// may cause a problem
-    let id : string;
-    
-    id = this.props.id;
-    console.log(id);
-    if(id){
+  async componentDidMount() {// may cause a problem
+    this.setState({
+      adminAccess: await AdminControl()
+    });
+    if(this.state.adminAccess){
+      let id: string;
+
+      id = this.props.id;
+      console.log(id);
+      if (id) {
         this.getSclub(id);
+      }
     }
   }
 
@@ -138,97 +147,96 @@ class Sclub extends Component<Props, State> {
         console.log(e);
       });
   }
-/*
-  deleteSclub() {
-    SclubDataService.delete(this.state.currentSclub.id)
-      .then((response: any) => {
-        console.log(response.data);
-        let navigate = useNavigate();
-        navigate("/sclubs");
-      })
-      .catch((e: Error) => {
-        console.log(e);
-      });
-  }
-*/
   render() {
-    const { currentSclub } = this.state;
+    if (!this.state.adminAccess) {
+      return (
+        <div className="container">
+          <header className="jumbotron">
+            <h3>{"Require Admin Role!"}</h3>
+          </header>
+        </div>
+      );
+    }
+    else {
+      const { currentSclub } = this.state;
 
-    return (
-      <div>
-        {currentSclub ? (
-          <div className="edit-form">
-            <h4>Student Club</h4>
-            <form>
-              <div className="form-group">
-                <label htmlFor="name">Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="name"
-                  value={currentSclub.name}
-                  onChange={this.onChangeName}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="description">Description</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="description"
-                  value={currentSclub.description}
-                  onChange={this.onChangeDescription}
-                />
-              </div>
+      return (
+        <div>
+          {currentSclub ? (
+            <div className="edit-form">
+              <h4>Student Club</h4>
+              <form>
+                <div className="form-group">
+                  <label htmlFor="name">Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="name"
+                    value={currentSclub.name}
+                    onChange={this.onChangeName}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="description">Description</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="description"
+                    value={currentSclub.description}
+                    onChange={this.onChangeDescription}
+                  />
+                </div>
 
-              <div className="form-group">
-                <label>
-                  <strong>Status:</strong>
-                </label>
-                {currentSclub.isActive ? "Active" : "Inactive"}
-              </div>
-            </form>
+                <div className="form-group">
+                  <label>
+                    <strong>Status:</strong>
+                  </label>
+                  {currentSclub.isActive ? "Active" : "Inactive"}
+                </div>
+              </form>
 
-            {currentSclub.isActive ? (
+              {currentSclub.isActive ? (
+                <button
+                  className="badge badge-primary mr-2"
+                  onClick={() => this.updateActive(false)}
+                >
+                  Inactivate
+                </button>
+              ) : (
+                <button
+                  className="badge badge-primary mr-2"
+                  onClick={() => this.updateActive(true)}
+                >
+                  Activate
+                </button>
+              )}
+
               <button
-                className="badge badge-primary mr-2"
-                onClick={() => this.updateActive(false)}
+                className="badge badge-danger mr-2"
+                onClick={this.deleteSclub}
               >
-                Inactivate
+                Delete
               </button>
-            ) : (
+
               <button
-                className="badge badge-primary mr-2"
-                onClick={() => this.updateActive(true)}
+                type="submit"
+                className="badge badge-success"
+                onClick={this.updateSclub}
               >
-                Activate
+                Update
               </button>
-            )}
+              <p>{this.state.message}</p>
+            </div>
+          ) : (
+            <div>
+              <br />
+              <p>Please click on a Student Club...</p>
+            </div>
+          )}
+        </div>
+      );
+    }
 
-            <button
-              className="badge badge-danger mr-2"
-              onClick={this.deleteSclub}
-            >
-              Delete
-            </button>
-
-            <button
-              type="submit"
-              className="badge badge-success"
-              onClick={this.updateSclub}
-            >
-              Update
-            </button>
-            <p>{this.state.message}</p>
-          </div>
-        ) : (
-          <div>
-            <br />
-            <p>Please click on a Student Club...</p>
-          </div>
-        )}
-      </div>
-    );
   }
 }
 

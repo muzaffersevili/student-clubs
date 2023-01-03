@@ -45,11 +45,25 @@ export default class BoardAdmin extends Component<Props, State> {
   }
 
   render() {
-    return (
-      <div className="container">
-        <div>This is a parent component</div>
-      </div>
-    );
+    if(this.state.content == "Require Admin Role!"){
+      return (
+        <div className="container">
+          <header className="jumbotron">
+            <h3>{this.state.content}</h3>
+          </header>
+        </div>
+      );
+    }
+    else{
+      return (
+        <div className="container">
+          <header className="jumbotron">
+            <h3>KRAL BABA GERİ DÖNDÜ</h3>
+          </header>
+        </div>
+      );
+    }
+    
   }
 }
-export {BoardAdmin};
+export { BoardAdmin };
