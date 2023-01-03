@@ -95,13 +95,15 @@ export default class AddTutorial extends Component<Props, State> {
           {submitted ? (
             <div>
               <h4>You submitted successfully!</h4>
-              <button className="btn btn-success" onClick={this.newSclub}>
+              <button className="btn btn-success btn-lg" onClick={this.newSclub}>
                 Add
               </button>
             </div>
           ) : (
             <div>
+              <h4>
               <div className="form-group">
+                
                 <label htmlFor="name">Name</label>
                 <input
                   type="text"
@@ -127,9 +129,10 @@ export default class AddTutorial extends Component<Props, State> {
                 />
               </div>
 
-              <button onClick={this.saveSclub} className="btn btn-success">
+              <button onClick={this.saveSclub} className="btn btn-success btn-lg">
                 Submit
               </button>
+              </h4>
             </div>
           )}
         </div>

@@ -163,23 +163,27 @@ class Sclub extends Component<Props, State> {
         <div>
           {currentSclub ? (
             <div className="edit-form">
-              <h4>Student Club</h4>
+              <h3><strong>Student Club</strong></h3>
               <form>
                 <div className="form-group">
+                <h4>
                   <label htmlFor="name">Name</label>
+                  </h4>
                   <input
                     type="text"
-                    className="form-control"
+                    className="form-control form-control-lg"
                     id="name"
                     value={currentSclub.name}
                     onChange={this.onChangeName}
                   />
                 </div>
                 <div className="form-group">
+                <h4>
                   <label htmlFor="description">Description</label>
+                  </h4>
                   <input
                     type="text"
-                    className="form-control"
+                    className="form-control form-control-lg"
                     id="description"
                     value={currentSclub.description}
                     onChange={this.onChangeDescription}
@@ -187,13 +191,14 @@ class Sclub extends Component<Props, State> {
                 </div>
 
                 <div className="form-group">
-                  <label>
-                    <strong>Status:</strong>
-                  </label>
+                  <h4>
+                    <strong>Status: </strong>
                   {currentSclub.isActive ? "Active" : "Inactive"}
+                  </h4>
                 </div>
               </form>
 
+              <h3>
               {currentSclub.isActive ? (
                 <button
                   className="badge badge-primary mr-2"
@@ -209,14 +214,18 @@ class Sclub extends Component<Props, State> {
                   Activate
                 </button>
               )}
+              </h3>
 
+              <h3>
               <button
                 className="badge badge-danger mr-2"
                 onClick={this.deleteSclub}
               >
                 Delete
               </button>
+              </h3>
 
+              <h3>
               <button
                 type="submit"
                 className="badge badge-success"
@@ -225,6 +234,7 @@ class Sclub extends Component<Props, State> {
                 Update
               </button>
               <p>{this.state.message}</p>
+              </h3>
             </div>
           ) : (
             <div>

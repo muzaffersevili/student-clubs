@@ -37,8 +37,8 @@ export default class TutorialsList extends Component<Props, State>{
   async componentDidMount() {
     const isAdmin = await AdminControl();
     this.setState({ isAdmin });
-    
-    if(isAdmin){
+
+    if (isAdmin) {
       await this.retrieveSclubs();
     }
   }
@@ -109,7 +109,7 @@ export default class TutorialsList extends Component<Props, State>{
   }
 
   render() {
-    if(!this.state.isAdmin){
+    if (!this.state.isAdmin) {
       return (
         <div className="container">
           <header className="jumbotron">
@@ -118,7 +118,7 @@ export default class TutorialsList extends Component<Props, State>{
         </div>
       );
     }
-    else{
+    else {
       const { searchName, sclubs, currentSclub, currentIndex } = this.state;
 
       return (
@@ -127,7 +127,7 @@ export default class TutorialsList extends Component<Props, State>{
             <div className="input-group mb-3">
               <input
                 type="text"
-                className="form-control"
+                className="form-control form-control-lg"
                 placeholder="Search by title"
                 value={searchName}
                 onChange={this.onChangeSearchName}
@@ -145,7 +145,7 @@ export default class TutorialsList extends Component<Props, State>{
           </div>
           <div className="col-md-6">
             <h4>Student Clubs List</h4>
-  
+
             <ul className="list-group">
               {sclubs &&
                 sclubs.map((tutorial: ISclubData, index: number) => (
@@ -161,9 +161,9 @@ export default class TutorialsList extends Component<Props, State>{
                   </li>
                 ))}
             </ul>
-  
+
             <button
-              className="m-3 btn btn-sm btn-danger"
+              className="m-3 btn btn-lg btn-danger"
               onClick={this.removeAllTutorials}
             >
               Remove All
@@ -172,32 +172,43 @@ export default class TutorialsList extends Component<Props, State>{
           <div className="col-md-6">
             {currentSclub ? (
               <div>
-                <h4>Student Club</h4>
+
+                <h4>
+                  <strong>Student Club</strong>
+                </h4>
+
                 <div>
-                  <label>
+                  <h5>
                     <strong>Name:</strong>
-                  </label>{" "}
+                  </h5>{" "}
                   {currentSclub.name}
                 </div>
+
                 <div>
-                  <label>
+                  <h5>
                     <strong>Description:</strong>
-                  </label>{" "}
+                  </h5>{" "}
                   {currentSclub.description}
                 </div>
+
                 <div>
-                  <label>
+                  <h5>
                     <strong>Status:</strong>
-                  </label>{" "}
+                  </h5>{" "}
                   {currentSclub.isActive ? "Active" : "Inactive"}
                 </div>
-  
+
+                <div>
+                  <h3>
                 <Link
                   to={"/sclubs/" + currentSclub.id}
                   className="badge badge-warning"
                 >
                   Edit
                 </Link>
+                </h3>
+                </div>
+
               </div>
             ) : (
               <div>
@@ -209,6 +220,6 @@ export default class TutorialsList extends Component<Props, State>{
         </div>
       );
     }
-    }
-    
+  }
+
 }
