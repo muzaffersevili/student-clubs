@@ -35,8 +35,9 @@ db.sequelize = sequelize;
 
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
-
 db.sclub = require("../models/sclub.model.js")(sequelize, Sequelize);
+db.announcement = require("../models/announcement.model.js")(sequelize, Sequelize);
+db.event = require("../models/event.model.js")(sequelize, Sequelize);
 
 /*
 With through, foreignKey, otherKey, we’re gonna have a new table user_roles
@@ -44,6 +45,8 @@ as connection between users and roles table via their primary key as foreign key
 
 To change associations visit the following page. https://sequelize.org/docs/v6/core-concepts/assocs/
 */
+
+// Many To Many USER and ROLE relation (Every user has at least one role.)
 db.role.belongsToMany(db.user, {
     through: "user_roles",
     foreignKey: "roleId",
@@ -55,42 +58,56 @@ db.user.belongsToMany(db.role, {
     otherKey: "roleId"
 });
 
-// student - student club relation
+// Many To Many STUDENT and STUDENT CLUB relation
 db.sclub.belongsToMany(db.user, {
     through: "membership",
     foreignKey: "sclubId",
-    otherKey: "userId"
+    otherKey: "studentId"
 });
-db.user.belongsToMany(db.role, {
+db.user.belongsToMany(db.sclub, {
     through: "membership",
-    foreignKey: "userId",
+    foreignKey: "studentId",
     otherKey: "sclubId"
 });
 
-// counselor - student club relation
-db.sclub.belongsToMany(db.user, {
-    through: "counsels",
+// One To One COUNSELOR and STUDENT CLUB relation (add a user column to the sclub)
+db.sclub.hasOne(db.user, {
+    foreignKey: 'counselorId'
+});
+db.user.belongsTo(db.sclub);
+
+
+// Many To One CHAIRPERSON and STUDENT CLUB relation
+db.sclub.hasMany(db.user, {
+    foreignKey: 'chairedSclubId'
+});
+db.user.belongsTo(db.sclub);
+
+// Many To Many EVENT and STUDENT CLUB relation (Every user has at least one role.)
+db.event.belongsToMany(db.sclub, {
+    through: "club_events",
+    foreignKey: "eventId",
+    otherKey: "sclubId"
+});
+db.sclub.belongsToMany(db.event, {
+    through: "club_events",
     foreignKey: "sclubId",
-    otherKey: "userId"
-});
-db.user.belongsToMany(db.role, {
-    through: "counsels",
-    foreignKey: "userId",
-    otherKey: "sclubId"
+    otherKey: "eventId"
 });
 
-// chairperson - student club relation
-db.sclub.belongsToMany(db.user, {
-    through: "manages",
-    foreignKey: "sclubId",
-    otherKey: "userId"
+// Many To One ANNOUNCEMENT and STUDENT CLUB relation
+db.sclub.hasMany(db.announcement, {
+    foreignKey: 'sclubId'
 });
-db.user.belongsToMany(db.role, {
-    through: "manages",
-    foreignKey: "userId",
-    otherKey: "sclubId"
-});
+db.announcement.belongsTo(db.sclub);
 
-db.ROLES = ["admin", "student", "chairperson","counselor"];
+// Many To One ANNOUNCEMENT and USER relation
+db.user.hasMany(db.announcement, {
+    foreignKey: 'announcerId'
+});
+db.announcement.belongsTo(db.user);
+
+
+db.ROLES = ["admin", "student", "chairperson", "counselor"];
 
 module.exports = db;

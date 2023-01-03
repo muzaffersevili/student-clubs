@@ -9,8 +9,8 @@
     // Retrieve all sclubs
     router.get("/", sclubs.findAll);
   
-    // Retrieve all published sclubs
-    router.get("/published", sclubs.findAllActive);
+    // Retrieve all active sclubs
+    router.get("/isActive", sclubs.findAllActive);
   
     // Retrieve a single Student Club with id
     router.get("/:id", sclubs.findOne);
