@@ -30,7 +30,6 @@ class Announcement extends Component<Props, State> {
     this.onChangeTitle= this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.getAnnouncement = this.getAnnouncement.bind(this);
-    this.updateActive = this.updateActive.bind(this);
     this.updateAnnouncement = this.updateAnnouncement.bind(this);
     this.deleteAnnouncement = this.deleteAnnouncement.bind(this);
 
@@ -39,7 +38,6 @@ class Announcement extends Component<Props, State> {
         id: null,
         title: "",
         description: "",
-        isActive: false
       },
       message: "",
       adminAccess: false
@@ -96,31 +94,6 @@ class Announcement extends Component<Props, State> {
         console.log(e);
       });
   }
-
-  updateActive(status: boolean) {
-    const data: ISannouncementData = {
-      id: this.state.currentAnnouncement.id,
-      title: this.state.currentAnnouncement.title,
-      description: this.state.currentAnnouncement.description,
-      isActive: status,
-    };
-
-    AnnouncementDataService.update(data, this.state.currentAnnouncement.id)
-      .then((response: any) => {
-        this.setState((prevState) => ({
-            currentAnnouncement: {
-            ...prevState.currentAnnouncement,
-            isActive: status,
-          },
-          message: "The status was updated successfully!"
-        }));
-        console.log(response.data);
-      })
-      .catch((e: Error) => {
-        console.log(e);
-      });
-  }
-
   updateAnnouncement() {
     AnnouncementDataService.update(
       this.state.currentAnnouncement,
@@ -140,7 +113,7 @@ class Announcement extends Component<Props, State> {
     AnnouncementDataService.delete(this.state.currentAnnouncement.id)
       .then((response: any) => {
         console.log(response.data);
-        this.props.navigation("/sclubs");
+        this.props.navigation("/announcements");
       })
       .catch((e: Error) => {
         console.log(e);
@@ -163,11 +136,11 @@ class Announcement extends Component<Props, State> {
         <div>
           {currentAnnouncement ? (
             <div className="edit-form">
-              <h3><strong>Student Club</strong></h3>
+              <h3><strong>Announcement</strong></h3>
               <form>
                 <div className="form-group">
                   <h4>
-                    <label htmlFor="name">Name</label>
+                    <label htmlFor="name">Title</label>
                   </h4>
                   <input
                     type="text"
@@ -189,32 +162,7 @@ class Announcement extends Component<Props, State> {
                     onChange={this.onChangeDescription}
                   />
                 </div>
-
-                <div className="form-group">
-                  <h4>
-                    <strong>Status: </strong>
-                    {currentAnnouncement.isActive ? "Active" : "Inactive"}
-                  </h4>
-                </div>
               </form>
-
-              <h3>
-                {currentAnnouncement.isActive ? (
-                  <button
-                    className="badge badge-primary mr-2"
-                    onClick={() => this.updateActive(false)}
-                  >
-                    Inactivate
-                  </button>
-                ) : (
-                  <button
-                    className="badge badge-primary mr-2"
-                    onClick={() => this.updateActive(true)}
-                  >
-                    Activate
-                  </button>
-                )}
-              </h3>
 
               <h3>
                 <button
@@ -239,7 +187,7 @@ class Announcement extends Component<Props, State> {
           ) : (
             <div>
               <br />
-              <p>Please click on a Student Club...</p>
+              <p>Please click on an Announcement...</p>
             </div>
           )}
         </div>

@@ -41,6 +41,8 @@ require('./app/routes/sclub.routes')(app);
 require('./app/routes/sclubShow.routes')(app);
 require('./app/routes/user.data.routes')(app);
 require('./app/routes/log.routes')(app);
+require('./app/routes/announcement.routes')(app);
+require('./app/routes/event.routes')(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

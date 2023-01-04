@@ -29,6 +29,10 @@ import AddAnnouncement from "./components/add-announcement.component";
 import Announcement from "./components/announcement.component";
 import AnnouncementsList from "./components/announcements-list.component";
 
+import AddEvent from "./components/add-event.component";
+import Event from "./components/event.component"
+import EventsList from "./components/events-list.component";
+
 import EventBus from "./common/EventBus";
 
 type Props = {};
@@ -148,7 +152,7 @@ class App extends Component<Props, State> {
                 </Link>
               </li>
             )}
-             {showAdminBoard && (
+            {showAdminBoard && (
               <li className="nav-item">
                 <Link to={"/users"} className="nav-link">
                   Users
@@ -159,6 +163,34 @@ class App extends Component<Props, State> {
               <li className="nav-item">
                 <Link to={"/addUser"} className="nav-link">
                   Add Users
+                </Link>
+              </li>
+            )}
+            {showAdminBoard && (
+              <li className="nav-item">
+                <Link to={"/announcements"} className="nav-link">
+                  Announcements
+                </Link>
+              </li>
+            )}
+            {showAdminBoard && (
+              <li className="nav-item">
+                <Link to={"/addAnnouncement"} className="nav-link">
+                  Add Announcement
+                </Link>
+              </li>
+            )}
+            {showAdminBoard && (
+              <li className="nav-item">
+                <Link to={"/events"} className="nav-link">
+                  Events
+                </Link>
+              </li>
+            )}
+            {showAdminBoard && (
+              <li className="nav-item">
+                <Link to={"/addEvents"} className="nav-link">
+                  Add Event
                 </Link>
               </li>
             )}
@@ -212,9 +244,18 @@ class App extends Component<Props, State> {
             <Route path="/addSclub" element={<AddSclub/>} />
             <Route path="/sclubs/:id" element={<Sclub/>} />
 
+            <Route path="/users" element={<UsersList/>} />
+            <Route path="/addUser" element={<AddUser/>} />
+            <Route path="/users/:id" element={<User/>} />
+
             <Route path="/announcements" element={<AnnouncementsList/>} />
             <Route path="/addAnnouncement" element={<AddAnnouncement/>} />
             <Route path="/announcements/:id" element={<Announcement/>} />
+            
+
+            <Route path="/events" element={<EventsList/>} />
+            <Route path="/addEvent" element={<AddEvent/>} />
+            <Route path="/events/:id" element={<Event/>} />
           </Routes>
         </div>
 

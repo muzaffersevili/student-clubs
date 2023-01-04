@@ -188,12 +188,6 @@ export default class BoardAdmin extends Component<Props, State> {
                 </label>{" "}
 
               </div>
-              <div>
-                <label>
-                  <strong>TimeStamp:</strong>{currentLog.timeStamp}
-                </label>{" "}
-
-              </div>
 
               <Link
                 to={"/logs/" + currentLog.id}

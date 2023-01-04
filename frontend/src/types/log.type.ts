@@ -3,4 +3,4 @@ export default interface ILogData {
     messageType?: string,
     message?: string,
     timeStamp?: string
-  }
+}

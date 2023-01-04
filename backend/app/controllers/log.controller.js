@@ -9,12 +9,8 @@ exports.create = (req, res) => {
   const log = {
     messageType: req.body.messageType,
     message: req.body.message,
-    timeStamp: ""
+    timeStamp:req.body.timeStamp
   };
-  var today = new Date();
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  log.timeStamp = date+' '+time;
   console.log(log);
   // Save Log in the database
   Log.create(log)
@@ -39,10 +35,10 @@ exports.findAll = (req, res) => {
       res.send(data);
     })
     .catch(err => {
-      /*res.status(500).send({
+      res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving Logs."
-      });*/
+      });
     });
 };
 

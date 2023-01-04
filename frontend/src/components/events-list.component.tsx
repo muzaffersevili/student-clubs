@@ -1,32 +1,32 @@
 import { Component, ChangeEvent } from "react";
-import AnnouncementDataService from "../services/announcement.service";
+import EventDataService from "../services/event.service";
 import { Link } from "react-router-dom";
-import ISannouncementData from '../types/announcement.type';
+import IEventData from '../types/event.type';
 import AdminControl from '../services/admin-control';
 
 type Props = {};
 
 type State = {
-  announcements: Array<ISannouncementData>,
-  currentAnnouncement: ISannouncementData | null,
+  events: Array<IEventData>,
+  currentEvent: IEventData | null,
   currentIndex: number,
   searchTitle: string,
   isAdmin: boolean
 };
 
-export default class AnnouncementList extends Component<Props, State>{
+export default class EventList extends Component<Props, State>{
   constructor(props: Props) {
     super(props);
     this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
-    this.retrieveAnnouncements = this.retrieveAnnouncements.bind(this);
+    this.retrieveEvents = this.retrieveEvents.bind(this);
     this.refreshList = this.refreshList.bind(this);
-    this.setActiveAnnouncements = this.setActiveAnnouncements.bind(this);
-    this.removeAllAnnouncements = this.removeAllAnnouncements.bind(this);
+    this.setActiveEvent = this.setActiveEvent.bind(this);
+    this.removeAllEvents = this.removeAllEvents.bind(this);
     this.searchTitle = this.searchTitle.bind(this);
 
     this.state = {
-        announcements: [],
-        currentAnnouncement: null,
+        events: [],
+        currentEvent: null,
       currentIndex: -1,
       searchTitle: "",
       isAdmin: false
@@ -38,7 +38,7 @@ export default class AnnouncementList extends Component<Props, State>{
     this.setState({ isAdmin });
 
     if (isAdmin) {
-      await this.retrieveAnnouncements();
+      await this.retrieveEvents();
     }
   }
 
@@ -50,11 +50,11 @@ export default class AnnouncementList extends Component<Props, State>{
     });
   }
 
-  async retrieveAnnouncements(): Promise<void> {
-    AnnouncementDataService.getAll()
+  async retrieveEvents(): Promise<void> {
+    EventDataService.getAll()
       .then((response: any) => {
         this.setState({
-            announcements: response.data
+            events: response.data
         });
         console.log(response.data);
       })
@@ -64,22 +64,22 @@ export default class AnnouncementList extends Component<Props, State>{
   }
 
   refreshList() {
-    this.retrieveAnnouncements();
+    this.retrieveEvents();
     this.setState({
-        currentAnnouncement: null,
+        currentEvent: null,
       currentIndex: -1
     });
   }
 
-  setActiveAnnouncements(announcement: ISannouncementData, index: number) {
+  setActiveEvent(event: IEventData, index: number) {
     this.setState({
-        currentAnnouncement: announcement,
+        currentEvent: event,
       currentIndex: index
     });
   }
 
-  removeAllAnnouncements() {
-    AnnouncementDataService.deleteAll()
+  removeAllEvents() {
+    EventDataService.deleteAll()
       .then((response: any) => {
         console.log(response.data);
         this.refreshList();
@@ -91,14 +91,14 @@ export default class AnnouncementList extends Component<Props, State>{
 
   searchTitle() {
     this.setState({
-        currentAnnouncement: null,
+        currentEvent: null,
       currentIndex: -1
     });
 
-    AnnouncementDataService.findByTitle(this.state.searchTitle)
+    EventDataService.findByTitle(this.state.searchTitle)
       .then((response: any) => {
         this.setState({
-            announcements: response.data
+            events: response.data
         });
         console.log(response.data);
       })
@@ -118,7 +118,7 @@ export default class AnnouncementList extends Component<Props, State>{
       );
     }
     else {
-      const { searchTitle, announcements, currentAnnouncement, currentIndex } = this.state;
+      const { searchTitle, events, currentEvent, currentIndex } = this.state;
 
       return (
         <div className="list row">
@@ -143,49 +143,49 @@ export default class AnnouncementList extends Component<Props, State>{
             </div>
           </div>
           <div className="col-md-6">
-            <h4>Announcements List</h4>
+            <h4>Event List</h4>
 
             <ul className="list-group">
-              {announcements &&
-                announcements.map((announcement: ISannouncementData, index: number) => (
+              {events &&
+                events.map((event: IEventData, index: number) => (
                   <li
                     className={
                       "list-group-item " +
                       (index === currentIndex ? "active" : "")
                     }
-                    onClick={() => this.setActiveAnnouncements(announcement, index)}
+                    onClick={() => this.setActiveEvent(event, index)}
                     key={index}
                   >
-                    {announcement.title}
+                    {event.title}
                   </li>
                 ))}
             </ul>
 
             <button
               className="m-3 btn btn-lg btn-danger"
-              onClick={this.removeAllAnnouncements}
+              onClick={this.removeAllEvents}
             >
               Remove All
             </button>
           </div>
           <div className="col-md-6">
-            {currentAnnouncement ? (
+            {currentEvent ? (
               <div>
 
                 <h4>
-                  <strong>Announcements</strong>
+                  <strong>Event</strong>
                 </h4>
 
                 <div>
                   <h5>
-                    <strong>Title:</strong>{currentAnnouncement.title}
+                    <strong>Title:</strong>{currentEvent.title}
                   </h5>{" "}
 
                 </div>
 
                 <div>
                   <h5>
-                    <strong>Description:</strong>{currentAnnouncement.description}
+                    <strong>Description:</strong>{currentEvent.description}
                   </h5>{" "}
                   
                 </div>
@@ -193,7 +193,7 @@ export default class AnnouncementList extends Component<Props, State>{
                 <div>
                   <h3>
                     <Link
-                      to={"/announcements/" + currentAnnouncement.id}
+                      to={"/events/" + currentEvent.id}
                       className="badge badge-warning"
                     >
                       Edit
@@ -205,7 +205,7 @@ export default class AnnouncementList extends Component<Props, State>{
             ) : (
               <div>
                 <br />
-                <p>Please click on an Announcement...</p>
+                <p>Please click on an Event...</p>
               </div>
             )}
           </div>
