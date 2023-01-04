@@ -13,7 +13,7 @@ type State = {
     searchName: string
 };
 
-export default class TutorialsList extends Component<Props, State>{
+export default class sclubShowList extends Component<Props, State>{
     constructor(props: Props) {
         super(props);
         this.onChangeSearchName = this.onChangeSearchName.bind(this);
@@ -63,9 +63,9 @@ export default class TutorialsList extends Component<Props, State>{
         });
     }
 
-    setActiveSclub(tutorial: ISclubData, index: number) {
+    setActiveSclub(sclub: ISclubData, index: number) {
         this.setState({
-            currentSclub: tutorial,
+            currentSclub: sclub,
             currentIndex: index
         });
     }
@@ -118,16 +118,16 @@ export default class TutorialsList extends Component<Props, State>{
 
                     <ul className="list-group">
                         {sclubs &&
-                            sclubs.map((tutorial: ISclubData, index: number) => (
+                            sclubs.map((sclub: ISclubData, index: number) => (
                                 <li
                                     className={
                                         "list-group-item " +
                                         (index === currentIndex ? "active" : "")
                                     }
-                                    onClick={() => this.setActiveSclub(tutorial, index)}
+                                    onClick={() => this.setActiveSclub(sclub, index)}
                                     key={index}
                                 >
-                                    {tutorial.name}
+                                    {sclub.name}
                                 </li>
                             ))}
                     </ul>

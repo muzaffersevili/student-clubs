@@ -5,21 +5,17 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Log
 exports.create = (req, res) => {
 
-  // Validate request
-  if (!req.body.message) {
-    res.status(400).send({
-      message: "Message can not be empty!"
-    });
-    return;
-  }
-
   // Create a Log
   const log = {
-    timestamp: req.body.timestamp,
-    level: req.body.level,
-    message: req.body.message
+    messageType: req.body.messageType,
+    message: req.body.message,
+    timeStamp: ""
   };
-
+  var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  log.timeStamp = date+' '+time;
+  console.log(log);
   // Save Log in the database
   Log.create(log)
     .then(data => {
@@ -35,18 +31,18 @@ exports.create = (req, res) => {
 
 // Retrieve all Logs from the database.
 exports.findAll = (req, res) => {
-  const message = req.query.message;
-  var condition = message ? { message: { [Op.like]: `%${message}%` } } : null;
+  const name = req.query.name;
+  var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
 
   Log.findAll({ where: condition })
     .then(data => {
       res.send(data);
     })
     .catch(err => {
-      res.status(500).send({
+      /*res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving Log."
-      });
+          err.message || "Some error occurred while retrieving Logs."
+      });*/
     });
 };
 
@@ -67,31 +63,6 @@ exports.findOne = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message: "Error retrieving Log with id=" + id
-      });
-    });
-};
-
-// Update a Log by the id in the request
-exports.update = (req, res) => {
-  const id = req.params.id;
-
-  Log.update(req.body, {
-    where: { id: id }
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: "Log was updated successfully."
-        });
-      } else {
-        res.send({
-          message: `Cannot update Log with id=${id}. Maybe Log was not found or req.body is empty!`
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error updating Log with id=" + id
       });
     });
 };
@@ -128,7 +99,7 @@ exports.deleteAll = (req, res) => {
     truncate: false
   })
     .then(nums => {
-      res.send({ message: `${nums} Log were deleted successfully!` });
+      res.send({ message: `${nums} Logs were deleted successfully!` });
     })
     .catch(err => {
       res.status(500).send({

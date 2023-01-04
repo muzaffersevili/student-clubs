@@ -129,7 +129,7 @@ class Announcement extends Component<Props, State> {
       .then((response: any) => {
         console.log(response.data);
         this.setState({
-          message: "The tutorial was updated successfully!",
+          message: "The Announcement was updated successfully!",
         });
       })
       .catch((e: Error) => {

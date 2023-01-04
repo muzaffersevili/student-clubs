@@ -1,5 +1,6 @@
 import http from "../http-common";
 import ISclubData from "../types/sclub.type"
+import LogService from "./log.service"
 
 class SclubDataService {
   getAll() {

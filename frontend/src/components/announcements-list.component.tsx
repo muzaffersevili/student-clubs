@@ -148,16 +148,16 @@ export default class AnnouncementList extends Component<Props, State>{
 
             <ul className="list-group">
               {announcements &&
-                announcements.map((tutorial: ISannouncementData, index: number) => (
+                announcements.map((announcement: ISannouncementData, index: number) => (
                   <li
                     className={
                       "list-group-item " +
                       (index === currentIndex ? "active" : "")
                     }
-                    onClick={() => this.setActiveAnnouncements(tutorial, index)}
+                    onClick={() => this.setActiveAnnouncements(announcement, index)}
                     key={index}
                   >
-                    {tutorial.title}
+                    {announcement.title}
                   </li>
                 ))}
             </ul>

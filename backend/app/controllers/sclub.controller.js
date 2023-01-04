@@ -137,7 +137,7 @@ exports.deleteAll = (req, res) => {
     });
 };
 
-// find all published Sclub
+// find all active Sclub
 exports.findAllActive = (req, res) => {
   Sclub.findAll({ where: { isActive: true } })
     .then(data => {

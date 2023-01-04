@@ -129,7 +129,7 @@ class Sclub extends Component<Props, State> {
       .then((response: any) => {
         console.log(response.data);
         this.setState({
-          message: "The tutorial was updated successfully!",
+          message: "The Student Club was updated successfully!",
         });
       })
       .catch((e: Error) => {

@@ -22,7 +22,7 @@ export default class SclubsList extends Component<Props, State>{
     this.retrieveSclubs = this.retrieveSclubs.bind(this);
     this.refreshList = this.refreshList.bind(this);
     this.setActiveSclub = this.setActiveSclub.bind(this);
-    this.removeAllTutorials = this.removeAllTutorials.bind(this);
+    this.removeAllSclubs = this.removeAllSclubs.bind(this);
     this.searchName = this.searchName.bind(this);
 
     this.state = {
@@ -72,14 +72,14 @@ export default class SclubsList extends Component<Props, State>{
     });
   }
 
-  setActiveSclub(tutorial: ISclubData, index: number) {
+  setActiveSclub(sclub: ISclubData, index: number) {
     this.setState({
-      currentSclub: tutorial,
+      currentSclub: sclub,
       currentIndex: index
     });
   }
 
-  removeAllTutorials() {
+  removeAllSclubs() {
     SclubDataService.deleteAll()
       .then((response: any) => {
         console.log(response.data);
@@ -148,23 +148,23 @@ export default class SclubsList extends Component<Props, State>{
 
             <ul className="list-group">
               {sclubs &&
-                sclubs.map((tutorial: ISclubData, index: number) => (
+                sclubs.map((sclub: ISclubData, index: number) => (
                   <li
                     className={
                       "list-group-item " +
                       (index === currentIndex ? "active" : "")
                     }
-                    onClick={() => this.setActiveSclub(tutorial, index)}
+                    onClick={() => this.setActiveSclub(sclub, index)}
                     key={index}
                   >
-                    {tutorial.name}
+                    {sclub.name}
                   </li>
                 ))}
             </ul>
 
             <button
               className="m-3 btn btn-lg btn-danger"
-              onClick={this.removeAllTutorials}
+              onClick={this.removeAllSclubs}
             >
               Remove All
             </button>

@@ -1,12 +1,15 @@
 module.exports = (sequelize, Sequelize) => {
     const Log = sequelize.define("logs", {
-        timestamp: {
-            type: Sequelize.DATE
+        messageType: {
+            type: Sequelize.STRING
         },
         message: {
             type: Sequelize.TEXT
+        },
+        timestamp: {
+            type: Sequelize.DATE
         }
+
     });
-  
     return Log;
 };
