@@ -1,5 +1,7 @@
 
 import { Component, ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import LogService from "../services/log.service"
 import ILogData from "../types/log.type"
@@ -7,7 +9,8 @@ import ILogData from "../types/log.type"
 import AdminControl from '../services/admin-control';
 import { Link } from "react-router-dom";
 
-type Props = {};
+
+type Props = { id: string; navigation: any }
 
 type State = {
   logs: Array<ILogData>,
@@ -18,7 +21,15 @@ type State = {
   content: string
 }
 
-export default class BoardAdmin extends Component<Props, State> {
+function withParams(Component: any) {
+  return (props: any) => {
+    const navigation = useNavigate();
+    const params = useParams();
+    return <Component {...props} id={params} navigation={navigation} />;
+  }
+}
+
+class BoardAdmin extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
@@ -26,7 +37,7 @@ export default class BoardAdmin extends Component<Props, State> {
     this.retrievelogs = this.retrievelogs.bind(this);
     this.refreshList = this.refreshList.bind(this);
     this.setActiveLog = this.setActiveLog.bind(this);
-
+    this.deleteLog = this.deleteLog.bind(this);
     this.removeAllLogs = this.removeAllLogs.bind(this);
     this.searchName = this.searchName.bind(this);
 
@@ -92,6 +103,18 @@ export default class BoardAdmin extends Component<Props, State> {
       .catch((e: Error) => {
         console.log(e);
       });
+  }
+   deleteLog() {
+    if(this.state.currentLog){
+      LogService.delete(this.state.currentLog.id)
+      .then((response: any) => {
+        console.log(response.data);
+        this.refreshList();
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
+    }
   }
 
   searchName() {
@@ -189,12 +212,12 @@ export default class BoardAdmin extends Component<Props, State> {
 
               </div>
 
-              <Link
-                to={"/logs/" + currentLog.id}
-                className="badge badge-warning"
-              >
-                Edit
-              </Link>
+              <button
+                  className="badge badge-danger mr-2"
+                  onClick={this.deleteLog}
+                >
+                  Delete
+                </button>
             </div>
           ) : (
             <div>
@@ -210,4 +233,4 @@ export default class BoardAdmin extends Component<Props, State> {
 
   }
 }
-export { BoardAdmin };
+export default withParams(BoardAdmin);

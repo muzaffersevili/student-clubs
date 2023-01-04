@@ -13,9 +13,12 @@ type State = ISeventData & {
 export default class AddEvent extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    
-    this.onChangeName = this.onChangeName.bind(this);
+
+    this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.onChangeLocation = this.onChangeLocation.bind(this);
+    this.onChangeStartDate = this.onChangeStartDate.bind(this);
+    this.onChangeEndDate = this.onChangeEndDate.bind(this);
     this.saveEvent = this.saveEvent.bind(this);
     this.newEvent = this.newEvent.bind(this);
 
@@ -23,6 +26,9 @@ export default class AddEvent extends Component<Props, State> {
       id: null,
       title: "",
       description: "",
+      location: "",
+      endDate: "",
+      startDate: "",
       submitted: false,
       adminAccess: false
     };
@@ -33,7 +39,7 @@ export default class AddEvent extends Component<Props, State> {
     });
   }
 
-  onChangeName(e: ChangeEvent<HTMLInputElement>) {
+  onChangeTitle(e: ChangeEvent<HTMLInputElement>) {
     this.setState({
       title: e.target.value
     });
@@ -45,10 +51,31 @@ export default class AddEvent extends Component<Props, State> {
     });
   }
 
+  onChangeLocation(e: ChangeEvent<HTMLInputElement>) {
+    this.setState({
+      location: e.target.value
+    });
+  }
+
+  onChangeEndDate(e: ChangeEvent<HTMLInputElement>) {
+    this.setState({
+      endDate: e.target.value
+    });
+  }
+
+  onChangeStartDate(e: ChangeEvent<HTMLInputElement>) {
+    this.setState({
+      startDate: e.target.value
+    });
+  }
+
   saveEvent() {
     const data: ISeventData = {
       title: this.state.title,
-      description: this.state.description
+      description: this.state.description,
+      location: this.state.location,
+      endDate: this.state.endDate,
+      startDate: this.state.startDate
     };
 
     EventDataService.create(data)
@@ -57,6 +84,9 @@ export default class AddEvent extends Component<Props, State> {
           id: response.data.id,
           title: response.data.title,
           description: response.data.description,
+          location: response.data.location,
+          endDate: response.data.endDate,
+          startDate: response.data.startDate,
           submitted: true
         });
         console.log(response.data);
@@ -71,6 +101,9 @@ export default class AddEvent extends Component<Props, State> {
       id: null,
       title: "",
       description: "",
+      location: "",
+      endDate: "",
+      startDate: "",
       submitted: false
     });
   }
@@ -86,7 +119,7 @@ export default class AddEvent extends Component<Props, State> {
       );
     }
     else {
-      const { submitted, title, description } = this.state;
+      const { submitted, title, description, location, endDate, startDate } = this.state;
 
       return (
         <div className="submit-form">
@@ -102,14 +135,14 @@ export default class AddEvent extends Component<Props, State> {
               <h4>
                 <div className="form-group">
 
-                  <label htmlFor="name">Title</label>
+                  <label htmlFor="title">Title</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="name"
+                    id="title"
                     required
                     value={title}
-                    onChange={this.onChangeName}
+                    onChange={this.onChangeTitle}
                     title="title"
                   />
                 </div>
@@ -124,6 +157,45 @@ export default class AddEvent extends Component<Props, State> {
                     value={description}
                     onChange={this.onChangeDescription}
                     name="description"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="location">Location</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="location"
+                    required
+                    value={location}
+                    onChange={this.onChangeLocation}
+                    name="location"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="startDate">Start Date</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="startDate"
+                    required
+                    value={startDate}
+                    onChange={this.onChangeStartDate}
+                    name="startDate"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="endDate">End Date</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="endDate"
+                    required
+                    value={endDate}
+                    onChange={this.onChangeEndDate}
+                    name="endDate"
                   />
                 </div>
 

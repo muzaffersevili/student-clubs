@@ -70,7 +70,7 @@ class User extends Component<Props, State> {
     UserDataService.getRoles(id)
       .then((response: any) => {
         this.setState({
-          currentRoles: response.data
+          currentRoles: response
         });
         console.log(response.data);
       })
@@ -145,32 +145,24 @@ class User extends Component<Props, State> {
       },
     }));
   }
-  updateUser() {
-    console.log("initial:" +this.state.currentRoles);
-    UserDataService.update(
-      this.state.currentUser,
-      this.state.currentUser.id
-    )
-      .then((response: any) => {
-        UserDataService.updateRoles(
-          this.state.currentUser.id,
-          this.state.currentRoles
-        )
-          .then((response: any) => {
-            console.log(response.data);
-            this.setState({
-              message: "The user was updated successfully!",
-            });
-          })
-          .catch((e: Error) => {
-            console.log(e);
-          });
-
-      })
-      .catch((e: Error) => {
-        console.log(e);
+  async updateUser() {
+    try {
+      await UserDataService.update(
+        this.state.currentUser,
+        this.state.currentUser.id
+      );
+      await UserDataService.updateRoles(
+        this.state.currentUser.id,
+        this.state.currentRoles
+      );
+      this.setState({
+        message: "The user was updated successfully!"
       });
+    } catch (error) {
+      console.error(error);
+    }
   }
+  
   deleteUser() {
     if (!this.state.currentRoles.includes("admin")) {
       UserDataService.delete(this.state.currentUser.id)
@@ -322,7 +314,7 @@ class User extends Component<Props, State> {
                 </div>
               </form>
 
-              {!this.state.currentRoles.includes('admin') && (
+              {!this.state.currentRoles?.includes('admin') && (
                 <button
                   className="badge badge-danger mr-2"
                   onClick={this.deleteUser}

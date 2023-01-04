@@ -32,6 +32,9 @@ class Events extends Component<Props, State> {
         super(props);
         this.onChangeTitle = this.onChangeTitle.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
+        this.onChangeLocation = this.onChangeLocation.bind(this);
+        this.onChangeStartDate = this.onChangeStartDate.bind(this);
+        this.onChangeEndDate = this.onChangeEndDate.bind(this);
         this.getEvent = this.getEvent.bind(this);
         this.updateActive = this.updateActive.bind(this);
         this.updateEvent = this.updateEvent.bind(this);
@@ -43,8 +46,8 @@ class Events extends Component<Props, State> {
                 title: "",
                 description: "",
                 location: "",
-                endDate: new Date(),
-                startDate: new Date()
+                endDate: "",
+                startDate: ""
             },
             message: "",
             adminAccess: false
@@ -88,6 +91,40 @@ class Events extends Component<Props, State> {
             },
         }));
     }
+
+    onChangeLocation(e: ChangeEvent<HTMLInputElement>) {
+        const location = e.target.value;
+
+        this.setState((prevState) => ({
+            currentEvent: {
+                ...prevState.currentEvent,
+                location: location,
+            },
+        }));
+    }
+
+    onChangeEndDate(e: ChangeEvent<HTMLInputElement>) {
+        const endDate = e.target.value;
+
+        this.setState((prevState) => ({
+            currentEvent: {
+                ...prevState.currentEvent,
+                endDate: endDate,
+            },
+        }));
+    }
+
+    onChangeStartDate(e: ChangeEvent<HTMLInputElement>) {
+        const startDate = e.target.value;
+
+        this.setState((prevState) => ({
+            currentEvent: {
+                ...prevState.currentEvent,
+                startDate: startDate,
+            },
+        }));
+    }
+
 
     getEvent(idProp: any) {
         EventDataService.get(idProp.id)
@@ -184,6 +221,7 @@ class Events extends Component<Props, State> {
                                         onChange={this.onChangeTitle}
                                     />
                                 </div>
+                                
                                 <div className="form-group">
                                     <h4>
                                         <label htmlFor="description">Description</label>
@@ -196,6 +234,47 @@ class Events extends Component<Props, State> {
                                         onChange={this.onChangeDescription}
                                     />
                                 </div>
+
+                                <div className="form-group">
+                                    <h4>
+                                        <label htmlFor="location">Location</label>
+                                    </h4>
+                                    <input
+                                        type="text"
+                                        className="form-control form-control-lg"
+                                        id="location"
+                                        value={currentEvent.location}
+                                        onChange={this.onChangeLocation}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <h4>
+                                        <label htmlFor="startDate">Start Date</label>
+                                    </h4>
+                                    <input
+                                        type="text"
+                                        className="form-control form-control-lg"
+                                        id="startDate"
+                                        value={currentEvent.startDate}
+                                        onChange={this.onChangeStartDate}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <h4>
+                                        <label htmlFor="endDate">End Date</label>
+                                    </h4>
+                                    <input
+                                        type="text"
+                                        className="form-control form-control-lg"
+                                        id="endDate"
+                                        value={currentEvent.endDate}
+                                        onChange={this.onChangeEndDate}
+                                    />
+                                </div>
+
+
                             </form>
 
                             <h3>

@@ -3,6 +3,6 @@ export default interface IEventData {
     title?: string,
     description?: string,
     location?: string,
-    endDate?: Date,
-    startDate?: Date,
+    endDate?: string,
+    startDate?: string,
 }

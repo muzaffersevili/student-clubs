@@ -69,7 +69,7 @@ export default class UsersList extends Component<Props, State>{
         UserDataService.getRoles(currentUser.id)
             .then((response: any) => {
                 this.setState({
-                    currentRoles: response.data
+                    currentRoles: response
                 });
                 console.log(response.data);
             })
@@ -131,7 +131,7 @@ export default class UsersList extends Component<Props, State>{
                             <input
                                 type="text"
                                 className="form-control-lg"
-                                placeholder="Search by title"
+                                placeholder="Search by name"
                                 value={searchName}
                                 onChange={this.onChangeSearchName}
                             />
@@ -196,12 +196,6 @@ export default class UsersList extends Component<Props, State>{
                                 <div>
                                     <label>
                                         <strong>Personal Email:</strong>{currentUser.personalEmail}
-                                    </label>{" "}
-
-                                </div>
-                                <div>
-                                    <label>
-                                        <strong>Password:</strong>{currentUser.password}
                                     </label>{" "}
 
                                 </div>
