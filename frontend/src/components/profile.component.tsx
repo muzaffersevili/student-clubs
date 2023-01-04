@@ -41,9 +41,8 @@ export default class Profile extends Component<Props, State> {
     UserDataService.getRoles(currentUser.id)
       .then((response: any) => {
         this.setState({
-          currentRoles: response.data
+          currentRoles: response
         });
-        console.log(response.data);
       })
       .catch((e: Error) => {
         console.log(e);
