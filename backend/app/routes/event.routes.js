@@ -20,4 +20,3 @@ module.exports = app => {
 
     app.use('/api/events', router);
 };
-Footer

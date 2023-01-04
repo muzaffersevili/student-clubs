@@ -191,6 +191,27 @@ export default class EventList extends Component<Props, State>{
                 </div>
 
                 <div>
+                  <h5>
+                    <strong>Location:</strong>{currentEvent.location}
+                  </h5>{" "}
+                  
+                </div>
+
+                <div>
+                  <h5>
+                    <strong>Start Date:</strong>{currentEvent.startDate}
+                  </h5>{" "}
+                  
+                </div>
+
+                <div>
+                  <h5>
+                    <strong>End Date:</strong>{currentEvent.endDate}
+                  </h5>{" "}
+                  
+                </div>
+
+                <div>
                   <h3>
                     <Link
                       to={"/events/" + currentEvent.id}

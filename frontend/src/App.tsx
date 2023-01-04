@@ -189,7 +189,7 @@ class App extends Component<Props, State> {
             )}
             {showAdminBoard && (
               <li className="nav-item">
-                <Link to={"/addEvents"} className="nav-link">
+                <Link to={"/addEvent"} className="nav-link">
                   Add Event
                 </Link>
               </li>
