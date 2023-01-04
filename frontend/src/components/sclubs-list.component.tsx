@@ -15,7 +15,7 @@ type State = {
   isAdmin: boolean
 };
 
-export default class TutorialsList extends Component<Props, State>{
+export default class SclubsList extends Component<Props, State>{
   constructor(props: Props) {
     super(props);
     this.onChangeSearchName = this.onChangeSearchName.bind(this);
@@ -96,7 +96,7 @@ export default class TutorialsList extends Component<Props, State>{
       currentIndex: -1
     });
 
-    SclubDataService.findByTitle(this.state.searchName)
+    SclubDataService.findByName(this.state.searchName)
       .then((response: any) => {
         this.setState({
           sclubs: response.data
@@ -179,23 +179,22 @@ export default class TutorialsList extends Component<Props, State>{
 
                 <div>
                   <h5>
-                    <strong>Name:</strong>
+                    <strong>Name:</strong>{currentSclub.name}
                   </h5>{" "}
-                  {currentSclub.name}
+
                 </div>
 
                 <div>
                   <h5>
-                    <strong>Description:</strong>
+                    <strong>Description:</strong>{currentSclub.description}
                   </h5>{" "}
-                  {currentSclub.description}
+                  
                 </div>
 
                 <div>
                   <h5>
-                    <strong>Status:</strong>
+                    <strong>Status:</strong>{currentSclub.isActive ? "Active" : "Inactive"}
                   </h5>{" "}
-                  {currentSclub.isActive ? "Active" : "Inactive"}
                 </div>
 
                 <div>

@@ -19,6 +19,11 @@ import BoardChairPerson from "./components/board-chairperson.component";
 import AddSclub from "./components/add-sclub.component";
 import Sclub from "./components/sclub.component";
 import SclubsList from "./components/sclubs-list.component";
+import SclubsShowList from "./components/sclubShow.component";
+
+import AddUser from "./components/add-user.component";
+import User from "./components/user.component";
+import UsersList from "./components/users-list.component";
 
 import EventBus from "./common/EventBus";
 
@@ -134,8 +139,22 @@ class App extends Component<Props, State> {
             )}
             {showAdminBoard && (
               <li className="nav-item">
-                <Link to={"/add"} className="nav-link">
+                <Link to={"/addSclub"} className="nav-link">
                   Add Student Club
+                </Link>
+              </li>
+            )}
+             {showAdminBoard && (
+              <li className="nav-item">
+                <Link to={"/users"} className="nav-link">
+                  Users
+                </Link>
+              </li>
+            )}
+            {showAdminBoard && (
+              <li className="nav-item">
+                <Link to={"/addUser"} className="nav-link">
+                  Add Users
                 </Link>
               </li>
             )}
@@ -185,7 +204,8 @@ class App extends Component<Props, State> {
             <Route path="/admin" element={<BoardAdmin />} />
 
             <Route path="/sclubs" element={<SclubsList/>} />
-            <Route path="/add" element={<AddSclub/>} />
+            <Route path="/sclubss" element={<SclubsShowList/>} />
+            <Route path="/addSclub" element={<AddSclub/>} />
             <Route path="/sclubs/:id" element={<Sclub/>} />
           </Routes>
         </div>

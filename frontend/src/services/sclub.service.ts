@@ -26,8 +26,8 @@ class SclubDataService {
     return http.delete<any>(`/sclubs`);
   }
 
-  findByTitle(title: string) {
-    return http.get<Array<ISclubData>>(`/sclubs?title=${title}`);
+  findByName(name: string) {
+    return http.get<Array<ISclubData>>(`/sclubs?name=${name}`);
   }
 }
 

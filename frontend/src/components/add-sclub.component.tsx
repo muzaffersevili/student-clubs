@@ -10,9 +10,10 @@ type State = ISclubData & {
   adminAccess: boolean
 };
 
-export default class AddTutorial extends Component<Props, State> {
+export default class AddSclub extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
+    
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.saveSclub = this.saveSclub.bind(this);

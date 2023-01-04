@@ -1,6 +1,7 @@
 import { Component } from "react";
 
 import UserService from "../services/user.service";
+import SclubService from "../services/sclub.service"
 import EventBus from "../common/EventBus";
 
 type Props = {};
@@ -47,7 +48,8 @@ export default class BoardStudent extends Component<Props, State> {
       <div className="container">
         <header className="jumbotron">
           <div className="form-group">
-            <button type="submit" className="btn btn-info btn-lg">Show Student Clubs</button>
+            <a className="btn btn-primary" href="/sclubss" role="button">Link</a>
+            <button type="submit"  className="btn btn-info btn-lg">Show Student Clubs</button>
           </div>
           <div className="form-group">
             <button type="submit" className="btn btn-info btn-lg">Show Memberships</button>
