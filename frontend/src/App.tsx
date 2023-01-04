@@ -25,6 +25,10 @@ import AddUser from "./components/add-user.component";
 import User from "./components/user.component";
 import UsersList from "./components/users-list.component";
 
+import AddAnnouncement from "./components/add-announcement.component";
+import Announcement from "./components/announcement.component";
+import AnnouncementsList from "./components/announcements-list.component";
+
 import EventBus from "./common/EventBus";
 
 type Props = {};
@@ -207,6 +211,10 @@ class App extends Component<Props, State> {
             <Route path="/sclubss" element={<SclubsShowList/>} />
             <Route path="/addSclub" element={<AddSclub/>} />
             <Route path="/sclubs/:id" element={<Sclub/>} />
+
+            <Route path="/announcements" element={<AnnouncementsList/>} />
+            <Route path="/addAnnouncement" element={<AddAnnouncement/>} />
+            <Route path="/announcements/:id" element={<Announcement/>} />
           </Routes>
         </div>
 
